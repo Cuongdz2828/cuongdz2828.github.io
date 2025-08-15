@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang Tool Admin cường</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+    #matrix {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+    .content {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+    }
+    h1 {
+        margin-bottom: 10px;
+        text-shadow: 1px 1px 3px rgba(0,255,0,0.5);
+    }
+    .box {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,255,0,0.2);
+        width: 90%;
+        max-width: 500px;
+        margin: 10px auto;
+        backdrop-filter: blur(5px);
+        transition: transform 0.2s ease;
+    }
+    .box:hover {
+        transform: scale(1.02);
+    }
+    .box h2 {
+        color: #0f0;
+        margin-bottom: 10px;
+    }
+    .box a, .box button {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 18px;
+        background: #0f0;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+    .box a:hover, .box button:hover {
+        background: #5f5;
+    }
+    .footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #ccc;
+    }
+    .footer a {
+        color: #0f0;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .top-left-info {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 12px 18px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,255,0,0.2);
+        font-size: 14px;
+        line-height: 1.6;
+        z-index: 2;
+    }
+    .top-left-info a {
+        color: #0f0;
+        text-decoration: none;
+        display: block;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="top-left-info">
+    <strong>Người tạo:</strong>v cường<br>
+    
+</div>
+
+<div class="content">
+    <h1>🛠️ Thông tin 🛠️</h1>
+
+    <div class="box">
+        <h2>🔧 Code Setup trên Termux</h2>
+        <button onclick="copySetupCodeTermux()">Copy Code</button>
+    </div>
+
+    <div class="box">
+        <h2>💻 Code Setup trên Windows</h2>
+        <button onclick="copySetupCodeWindows()">Copy Code</button>
+    </div>
+
+    <div class="box">
+        <h2>📱 Link Termux</h2>
+        <a href="https://www.mediafire.com/file/fh7llr6i7wlz0s3/Termux_0.119.0-beta.2.apk/file" target="_blank">Link tải Termux</a>
+    </div>
+
+    <div class="box">
+        <h2>🛠️ Link Tool</h2>
+        <a href="https://www.mediafire.com/file/9wex1mgm4fbdbi3/tool.py/file" target="_blank">Tool XWORLD</a>
+         <a href="https://www.mediafire.com/file/cmmipktzihmaoud/vip.py/file/file" target="_blank">Tool XWORLD</a>
+    </div>
+
+    <div class="footer">
+        <p>Admin: <b>v cường</b></p>
+        <p>YouTube: <a href="https://www.youtube.com/@Tool-Xworld" target="_blank">https://www.youtube.com/@Tool-Xworld</a></p>
+    </div>
+</div>
+
+<script>
+// Matrix rain effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&()&^%'; 
+const fontSize = 16; 
+const columns = canvas.width / fontSize; 
+const drops = Array(Math.floor(columns)).fill(1);
+
+function draw() { 
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height); 
+    ctx.fillStyle = '#0F0'; 
+    ctx.shadowColor = '#0F0'; 
+    ctx.shadowBlur = 10; 
+    ctx.font = fontSize + 'px monospace'; 
+    for (let i = 0; i < drops.length; i++) { 
+        const text = letters.charAt(Math.floor(Math.random() * letters.length)); 
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize); 
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { 
+            drops[i] = 0; 
+        } 
+        drops[i]++; 
+    } 
+} 
+setInterval(draw, 35);
+
+// Copy functions
+function copySetupCodeTermux() {
+    const setupCode = `termux-setup-storage && pkg update -y && pkg upgrade -y && pip install requests typing-extensions && pkg install -y python && pip install requests bs4 colorama psutil`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(setupCode.trim()).then(() => alert("✅ Đã copy Code Setup trên Termux!"));
+    } else {
+        const tempInput = document.createElement('input');
+        tempInput.value = setupCode.trim();
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        alert("✅ Đã copy Code Setup trên Termux!");
+    }
+}
+
+function copySetupCodeWindows() {
+    const setupCodeWin = `python -m pip install --upgrade pip && pip install requests colorama psutil`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(setupCodeWin.trim()).then(() => alert("✅ Đã copy Code Setup trên Windows!"));
+    } else {
+        const tempInput = document.createElement('input');
+        tempInput.value = setupCodeWin.trim();
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        alert("✅ Đã copy Code Setup trên Windows!");
+    }
+}
+</script>
+
+</body>
+                      </html>
