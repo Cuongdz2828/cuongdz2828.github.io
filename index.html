@@ -12,7 +12,9 @@
         font-family: 'Poppins', sans-serif;
         color: white;
         text-align: center;
-        overflow: hidden;
+        /* overflow: hidden;  <-- đã bỏ */
+        overflow-y: auto; /* cho phép cuộn dọc */
+        background: black;
     }
     #matrix {
         position: fixed;
@@ -98,8 +100,7 @@
 <canvas id="matrix"></canvas>
 
 <div class="top-left-info">
-    <strong>Người tạo:</strong>v cường<br>
-    
+    <strong>Người tạo:</strong> v cường<br>
 </div>
 
 <div class="content">
@@ -122,8 +123,8 @@
 
     <div class="box">
         <h2>🛠️ Link Tool</h2>
-        <a href="https://www.mediafire.com/file/9wex1mgm4fbdbi3/tool.py/file" target="_blank">Tool XWORLD</a>
-         <a href="https://www.mediafire.com/file/cmmipktzihmaoud/vip.py/file/file" target="_blank">Tool XWORLD</a>
+        <a href="https://www.mediafire.com/file/9wex1mgm4fbdbi3/tool.py/file" target="_blank">lấy acc LQ</a>
+        <a href="https://www.mediafire.com/file/cmmipktzihmaoud/vip.py/file/file" target="_blank">Tool XWORLD</a>
     </div>
 
     <div class="footer">
@@ -139,60 +140,40 @@ const ctx = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&()&^%'; 
-const fontSize = 16; 
-const columns = canvas.width / fontSize; 
+const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&()&^%';
+const fontSize = 16;
+const columns = canvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
 
-function draw() { 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height); 
-    ctx.fillStyle = '#0F0'; 
-    ctx.shadowColor = '#0F0'; 
-    ctx.shadowBlur = 10; 
-    ctx.font = fontSize + 'px monospace'; 
-    for (let i = 0; i < drops.length; i++) { 
-        const text = letters.charAt(Math.floor(Math.random() * letters.length)); 
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize); 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { 
-            drops[i] = 0; 
-        } 
-        drops[i]++; 
-    } 
-} 
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0F0';
+    ctx.shadowColor = '#0F0';
+    ctx.shadowBlur = 10;
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
 setInterval(draw, 35);
 
 // Copy functions
 function copySetupCodeTermux() {
     const setupCode = `termux-setup-storage && pkg update -y && pkg upgrade -y && pip install requests typing-extensions && pkg install -y python && pip install requests bs4 colorama psutil`;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(setupCode.trim()).then(() => alert("✅ Đã copy Code Setup trên Termux!"));
-    } else {
-        const tempInput = document.createElement('input');
-        tempInput.value = setupCode.trim();
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        alert("✅ Đã copy Code Setup trên Termux!");
-    }
+    navigator.clipboard.writeText(setupCode.trim()).then(() => alert("✅ Đã copy Code Setup trên Termux!"));
 }
 
 function copySetupCodeWindows() {
     const setupCodeWin = `python -m pip install --upgrade pip && pip install requests colorama psutil`;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(setupCodeWin.trim()).then(() => alert("✅ Đã copy Code Setup trên Windows!"));
-    } else {
-        const tempInput = document.createElement('input');
-        tempInput.value = setupCodeWin.trim();
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        alert("✅ Đã copy Code Setup trên Windows!");
-    }
+    navigator.clipboard.writeText(setupCodeWin.trim()).then(() => alert("✅ Đã copy Code Setup trên Windows!"));
 }
 </script>
 
 </body>
-                      </html>
+</html>
